@@ -1,3 +1,59 @@
+-- Pantalla de bienvenida pequeña con fade out
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Crear ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = playerGui
+screenGui.IgnoreGuiInset = true
+screenGui.ResetOnSpawn = false
+
+-- Cuadro negro centrado
+local background = Instance.new("Frame")
+background.Size = UDim2.new(0.5, 0, 0.3, 0) -- más pequeño (50% ancho, 30% alto)
+background.Position = UDim2.new(0.25, 0, 0.35, 0) -- centrado
+background.BackgroundColor3 = Color3.new(0, 0, 0)
+background.BackgroundTransparency = 0
+background.Parent = screenGui
+background.AnchorPoint = Vector2.new(0, 0)
+
+-- Texto principal
+local mainText = Instance.new("TextLabel")
+mainText.Size = UDim2.new(1, -20, 0.7, 0) -- ocupa 70% del cuadro
+mainText.Position = UDim2.new(0, 10, 0, 10)
+mainText.BackgroundTransparency = 1
+mainText.Text = "Gracias por usar mi script para Tradeos"
+mainText.TextColor3 = Color3.new(1, 1, 1)
+mainText.TextScaled = true
+mainText.Font = Enum.Font.GothamBold
+mainText.Parent = background
+
+-- Marca abajo pequeña
+local smallText = Instance.new("TextLabel")
+smallText.Size = UDim2.new(1, -20, 0.2, 0) -- ocupa 20% del cuadro
+smallText.Position = UDim2.new(0, 10, 0.75, 0)
+smallText.BackgroundTransparency = 1
+smallText.Text = "tiktok: scriptzmm2.web"
+smallText.TextColor3 = Color3.new(1, 1, 1)
+smallText.TextScaled = true
+smallText.Font = Enum.Font.Gotham
+smallText.TextXAlignment = Enum.TextXAlignment.Left
+smallText.Parent = background
+
+-- Fade out
+local TweenService = game:GetService("TweenService")
+task.delay(5, function()
+    local tweenInfo = TweenInfo.new(2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+    TweenService:Create(background, tweenInfo, {BackgroundTransparency = 1}):Play()
+    TweenService:Create(mainText, tweenInfo, {TextTransparency = 1}):Play()
+    TweenService:Create(smallText, tweenInfo, {TextTransparency = 1}):Play()
+
+    task.wait(2.2)
+    screenGui:Destroy()
+end)
+
 local ancientValues = {
 	["Corrupt"] = 825,
     ["Gingerscope"] = 10800,
